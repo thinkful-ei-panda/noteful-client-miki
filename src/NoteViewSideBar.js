@@ -1,7 +1,6 @@
 import React from 'react';
 
 function NoteViewSideBar(props) {
-    console.log(props)
     const currentNote = props.notes.find(note => note.id === props.match.params.noteId)
     const currentFolder = props.folders.find(folder => folder.id === currentNote.folderId)
 
