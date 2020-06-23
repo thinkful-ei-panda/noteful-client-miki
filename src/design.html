@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+    <!-- Header, obviously -->
+    <header>
+        <!-- Link to main route -->
+        <h1>Noteful</h1>
+    </header>
+
+
+
+    <!-- Main, obviously -->
+    <main className="wrapper">
+        <div className="group-row">
+
+
+
+            <!-- Sidebar -->
+            <!-- ***************************** -->
+            <!-- Has 2 views depending on route -->
+            <!-- Main & dynamic folder routes sidebar  -->
+            <section className="group-column">
+
+                <ul>
+                    <li><button>Folder 1</button></li>
+                    <li><button>Folder 2</button></li>
+                    <li><button>Folder 3</button></li>
+                </ul>
+                <button>Add Folder</button>
+
+            </section>
+
+
+
+            <!-- Dynamic note routes sidebar -->
+            <section className="group-column">
+
+                <button>Go Back</button>
+                <h2>Current Folder</h2>
+                
+            </section>
+
+
+
+            <!-- Main section, not to be confused with main html -->
+            <!-- ***************************** -->
+            <!-- Main & dynamic folder routes view -->
+            <!-- Main route view will display all available notes -->
+            <!-- Dynamic folder route view will display all notes in current folder -->
+            <section className="group-column">
+                
+                <section>
+                    <h2>Note 1</h2>
+                    <div>
+                        <p>Date Modified</p>
+                        <button>Delete Note</button>
+                    </div>
+                </section>
+               
+                <section>
+                    <h2>Note 2</h2>
+                    <div>
+                        <p>ate Modified</p>
+                        <button>Delete Note</button>
+                    </div>
+                </section>
+                
+                <div>
+                    <button>Add Note</button>
+                
+                </div>
+            </section>
+
+
+
+            <!-- Dynamic note route view  -->
+            <section className="group-column">
+
+                <section className="item">
+                    <div>
+                        <h2>Current Note in Current Folder</h2>
+                        <div>
+                            <p>Date Modified</p>
+                            <button>Delete Note</button>
+                        </div>
+                    </div>
+                    <p>This Note's Content</p>
+                </section>
+
+            </section>
+
+
+
+            
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+import React from 'react';
+import { NavLink} from 'react-router-dom';
+
+class FolderViewSideBar extends React.Component {
+    folders = this.props.folders.map(folder => 
+        <li key={folder.id}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
+    )
+
+    render () {
+        return (
+            <section className="group-column">
+                <ul>
+                    {this.folders}
+                </ul>
+                <button>Add Folder</button>
+            </section>
+        );
+    };
+};
+
+export default FolderViewSideBar;
