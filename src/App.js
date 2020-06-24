@@ -7,6 +7,7 @@ import NoteViewSideBar from './NoteViewSideBar';
 import MainViewMain from './MainViewMain';
 import FolderViewMain from './FolderViewMain';
 import NoteViewMain from './NoteViewMain';
+// import NotefulContext from './NotefulContext';
 import STORE from './dummy-store';
 import './App.css';
 
@@ -21,15 +22,18 @@ class App extends React.Component {
         <Header />
         <main className="wrapper">
           <div className="group-row">
+            
+
+
               {/* Sidebars */}
               {/* Main Route */}
               <Route exact path='/' render={(props) => {
-                return <MainViewSideBar {...props} folders={this.state.STORE.folders} />}  
+                return <MainViewSideBar />}  
               } />
 
               {/* Dynamic Folder Route */}
               <Route exact path='/folder/:folderId' render={(props) => {
-                return <FolderViewSideBar {...props} folders={this.state.STORE.folders} />}  
+                return <FolderViewSideBar />}  
               } />
 
               {/* Dynamic Note Route */}
@@ -48,6 +52,9 @@ class App extends React.Component {
 
               {/* Dynamic Note Route */}
               <Route exact path='/note/:noteId' render={(props) => <NoteViewMain {...props} notes={this.state.STORE.notes} />} />
+
+
+
             </div>
           </main>
       </>

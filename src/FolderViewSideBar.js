@@ -1,12 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import NotefulContext from './NotefulContext';
 
+// Using class component here for practice
 class FolderViewSideBar extends React.Component {
-    folders = this.props.folders.map(folder => 
+    static contextType = NotefulContext;
+
+    folders = this.context.STORE.folders.map(folder => 
         <li key={folder.id}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
     )
 
     render () {
+        console.log(this);
         return (
             <section className="border group-column item">
                 <ul>
@@ -18,4 +23,4 @@ class FolderViewSideBar extends React.Component {
     };
 };
 
-export default FolderViewSideBar;
+export default withRouter(FolderViewSideBar);
