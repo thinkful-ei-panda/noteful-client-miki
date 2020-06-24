@@ -7,7 +7,6 @@ function NoteViewMain(props) {
         <NotefulContext.Consumer>
             {value => {
                 const currentNote = value.STORE.notes.find(note => note.id === props.match.params.noteId)
-
                 return (
                     <section className="group-column item-double">
                         <section>
