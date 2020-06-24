@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class FolderViewSideBar extends React.Component {
     folders = this.props.folders.map(folder => 
@@ -8,11 +8,11 @@ class FolderViewSideBar extends React.Component {
 
     render () {
         return (
-            <section className="group-column">
+            <section className="border group-column item">
                 <ul>
                     {this.folders}
+                    <li><NavLink to='/'>Add Folder</NavLink></li>
                 </ul>
-                <button>Add Folder</button>
             </section>
         );
     };

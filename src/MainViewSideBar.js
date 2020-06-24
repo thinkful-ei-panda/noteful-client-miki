@@ -7,11 +7,11 @@ function MainViewSideBar(props) {
     )
 
     return (
-        <section className="group-column">
+        <section className="border group-column item">
             <ul>
                 {folders}
+                <li><NavLink to='/'>Add Folder</NavLink></li>
             </ul>
-            <button>Add Folder</button>
         </section>
     );
 };

@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <header>
-            <h1>Noteful</h1>
+        <header className="border group-column">
+            <h1><Link to='/'>Noteful</Link></h1>
         </header>
     )
 }

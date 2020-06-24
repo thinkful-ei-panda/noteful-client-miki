@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Header from './Header';
 import MainViewSideBar from './MainViewSideBar';
 import FolderViewSideBar from './FolderViewSideBar';
 import NoteViewSideBar from './NoteViewSideBar';
@@ -7,6 +8,7 @@ import MainViewMain from './MainViewMain';
 import FolderViewMain from './FolderViewMain';
 import NoteViewMain from './NoteViewMain';
 import STORE from './dummy-store';
+import './App.css';
 
 class App extends React.Component {
   state = {
@@ -15,39 +17,40 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <header>
-            <h1><Link to='/'>Noteful</Link></h1>
-        </header>
-        <main>
-          <div>
+      <>
+        <Header />
+        <main className="wrapper">
+          <div className="group-row">
+              {/* Sidebars */}
+              {/* Main Route */}
+              <Route exact path='/' render={(props) => {
+                return <MainViewSideBar {...props} folders={this.state.STORE.folders} />}  
+              } />
 
-            {/* Sidebars */}
-            <Route exact path='/' render={(props) => {
-              return <MainViewSideBar {...props} folders={this.state.STORE.folders} handleFolderClick={this.handleFolderClick}/>}  
-            }/>
+              {/* Dynamic Folder Route */}
+              <Route exact path='/folder/:folderId' render={(props) => {
+                return <FolderViewSideBar {...props} folders={this.state.STORE.folders} />}  
+              } />
 
-            <Route exact path='/folder/:folderId' render={(props) => {
-              return <FolderViewSideBar {...props} folders={this.state.STORE.folders}/>}  
-            }/>
-
-            <Route exact path='/note/:noteId' render={(props) => {
-              return <NoteViewSideBar {...props} folders={this.state.STORE.folders} notes={this.state.STORE.notes}/>}  
-            }/>
-
-
+              {/* Dynamic Note Route */}
+              <Route exact path='/note/:noteId' render={(props) => {
+                return <NoteViewSideBar {...props} store={this.state.STORE} />}  
+              } />
 
 
-            {/* Main Sections */}
-            <Route exact path='/' render={() => <MainViewMain notes={this.state.STORE.notes}/>} />
 
-            <Route exact path='/folder/:folderId' render={(props) => <FolderViewMain {...props} notes={this.state.STORE.notes}/>} />
+              {/* Main Sections */}
+              {/* Main Route */}
+              <Route exact path='/' render={() => <MainViewMain notes={this.state.STORE.notes} />} />
+                
+              {/* Dynamic Folder Route */}
+              <Route exact path='/folder/:folderId' render={(props) => <FolderViewMain {...props} notes={this.state.STORE.notes} />} />
 
-            <Route exact path='/note/:noteId' render={(props) => <NoteViewMain {...props} notes={this.state.STORE.notes}/>} />
-
-          </div>
-        </main>
-      </div>
+              {/* Dynamic Note Route */}
+              <Route exact path='/note/:noteId' render={(props) => <NoteViewMain {...props} notes={this.state.STORE.notes} />} />
+            </div>
+          </main>
+      </>
     )
   }
 }
