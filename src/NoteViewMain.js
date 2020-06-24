@@ -3,6 +3,14 @@ import { withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 
 function NoteViewMain(props) {
+    const deleteNoteRequest = (noteId, deleteFunction) => {
+        console.log(noteId, 'meow')
+        fetch(`http://localhost:9090/note/${noteId}`, {'method': 'DELETE'})
+            .then(response => response.json())
+            .then(response => deleteFunction(noteId))
+            .then(props.history.push('/'))
+    }
+
     return (
         <NotefulContext.Consumer>
             {value => {
@@ -14,7 +22,8 @@ function NoteViewMain(props) {
                                 <h2>{currentNote.name}</h2>
                                 <div className="group-row note-group-row">
                                     <p>Date modified on: {currentNote.modified}</p>
-                                    <button>Delete Note</button>
+                                    <button onClick={() => deleteNoteRequest(currentNote.id, value.deleteNote)}>Delete Note</button>
+                                    {/* <button>Delete Note</button> */}
                                 </div>
                             </div>
                             <p className="note-margin width">{currentNote.content}</p>

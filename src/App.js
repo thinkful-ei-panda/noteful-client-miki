@@ -8,18 +8,28 @@ import MainViewMain from './MainViewMain';
 import FolderViewMain from './FolderViewMain';
 import NoteViewMain from './NoteViewMain';
 import NotefulContext from './NotefulContext';
-// import STORE from './dummy-store';
+import STORE from './dummy-store';
 import './App.css';
 
 class App extends React.Component {
   state = {
-    STORE: {
-      folders: [],
-      notes: []
-    }
+
+    STORE
+
+    // STORE: {
+    //   folders: [],
+    //   notes: []
+    // }
   }
 
-  componentDidMount() {
+  // deleteNote = (noteId) => {
+  //   console.log('hi')
+  //   console.log(this.state)
+  //   const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
+  //   this.setState({STORE: {notes: newNotes}});
+  // }
+
+  componentDidMount = () => {
     fetch('http://localhost:9090/db')
       .then(response => response.json())
       .then(response => this.setState({STORE: response}))
@@ -27,9 +37,11 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     const contextValue = {
-      STORE: this.state.STORE
-    }
+      STORE: this.state.STORE,
+      deleteNote: this.deleteNote
+    };
 
     return (
       <>

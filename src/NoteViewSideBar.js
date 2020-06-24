@@ -6,7 +6,6 @@ function NoteViewSideBar(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
-                console.log(NotefulContext)
                 const currentNote = value.STORE.notes.find(note => note.id === props.match.params.noteId)
 
                 const currentFolder = value.STORE.folders.find(folder => folder.id === currentNote.folderId)
