@@ -22,12 +22,12 @@ class App extends React.Component {
     // }
   }
 
-  // deleteNote = (noteId) => {
-  //   console.log('hi')
-  //   console.log(this.state)
-  //   const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
-  //   this.setState({STORE: {notes: newNotes}});
-  // }
+  deleteNote = (noteId) => {
+    console.log('hi')
+    console.log(this.state)
+    const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
+    this.setState({STORE: {folders: [...STORE.folders], notes: newNotes}});
+  }
 
   componentDidMount = () => {
     fetch('http://localhost:9090/db')
