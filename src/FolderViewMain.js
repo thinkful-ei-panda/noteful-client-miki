@@ -3,6 +3,14 @@ import { Link, withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 
 function FolderViewMain(props) {
+    const deleteNoteRequest = (noteId, deleteFunction) => {
+        console.log(noteId, 'ruff')
+        fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
+            .then(response => response.json())
+            .then(response => deleteFunction(noteId))
+            .then(props.history.push('/'))
+    }
+
     return (
         <NotefulContext.Consumer>
             {value => {
@@ -12,7 +20,7 @@ function FolderViewMain(props) {
                             <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
                             <div className="group-row note-group-row">
                                 <p>Modified: {note.modified}</p>
-                                <button>Delete Note</button>
+                                <button onClick={() => deleteNoteRequest(note.id, value.deleteNote)}>Delete Note</button>
                             </div>
                         </section>
                     )

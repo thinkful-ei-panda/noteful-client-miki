@@ -23,8 +23,6 @@ class App extends React.Component {
   }
 
   deleteNote = (noteId) => {
-    console.log('hi')
-    console.log(this.state)
     const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
     this.setState({STORE: {folders: [...STORE.folders], notes: newNotes}});
   }
@@ -33,11 +31,9 @@ class App extends React.Component {
     fetch('http://localhost:9090/db')
       .then(response => response.json())
       .then(response => this.setState({STORE: response}))
-      .then(console.log(this.state))
   }
 
   render() {
-    console.log(this.state)
     const contextValue = {
       STORE: this.state.STORE,
       deleteNote: this.deleteNote

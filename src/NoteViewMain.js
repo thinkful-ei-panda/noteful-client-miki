@@ -4,8 +4,7 @@ import NotefulContext from './NotefulContext';
 
 function NoteViewMain(props) {
     const deleteNoteRequest = (noteId, deleteFunction) => {
-        console.log(noteId, 'meow')
-        fetch(`http://localhost:9090/note/${noteId}`, {'method': 'DELETE'})
+        fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
             .then(response => deleteFunction(noteId))
             .then(props.history.push('/'))
