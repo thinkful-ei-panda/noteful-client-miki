@@ -44,7 +44,7 @@ class AddFolderView extends React.Component {
                 console.log(response, 'just checking')
                 const newFolder = {
                     id : response.id,
-                    name: this.state.folderName
+                    name: response.name
                 }
                 this.context.addFolder(newFolder)
                 this.props.history.push('/')

@@ -28,18 +28,18 @@ class App extends React.Component {
   addFolder = (newFolder) => {
     this.state.STORE.folders.push(newFolder)
     const newFolders = this.state.STORE.folders
-    this.setState({STORE: {folders: newFolders, notes: [...STORE.notes]}})
+    this.setState({STORE: {folders: newFolders, notes: [...this.state.STORE.notes]}})
   }
 
   addNote = (newNote) => {
-    this.state.STORE.notes.push(newNote)
-    const newNotes = this.state.STORE.notes
-    this.setState({STORE: {folders: [...STORE.folders], notes: newNotes}})
+    const newNotes = this.state.STORE.notes;
+    newNotes.push(newNote);
+    this.setState({STORE: {folders: [...this.state.STORE.folders], notes: newNotes}})
   }
 
   deleteNote = (noteId) => {
     const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
-    this.setState({STORE: {folders: [...STORE.folders], notes: newNotes}});
+    this.setState({STORE: {folders: [...this.state.STORE.folders], notes: newNotes}});
   }
 
   componentDidMount = () => {
