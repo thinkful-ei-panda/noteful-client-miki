@@ -14,8 +14,8 @@ function MainViewMain(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
+                console.log(props, value)
                 const notes = value.STORE.notes.map(note => {
-                    console.log('ruff', note.id)
                     return (
                         <section className="border group-column note-margin note-padding width" key={note.id}>
                             <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>

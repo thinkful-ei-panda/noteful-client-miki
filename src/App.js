@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Header from './Header';
+import AddFolderView from './AddFolderView';
 import MainViewSideBar from './MainViewSideBar';
 import FolderViewSideBar from './FolderViewSideBar';
 import NoteViewSideBar from './NoteViewSideBar';
@@ -20,7 +21,16 @@ class App extends React.Component {
     //   folders: [],
     //   notes: []
     // }
+
   }
+
+  // addFolder = () => {
+
+  // }
+
+  // addNote = () => {
+
+  // }
 
   deleteNote = (noteId) => {
     const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
@@ -49,6 +59,9 @@ class App extends React.Component {
               value={contextValue}
               >
 
+              {/* Add Form Route */}
+              <Route exact path='/addFolderView' component={MainViewSideBar} />
+              <Route exact path='/addFolderView' component={AddFolderView} />
 
 
               {/* Sidebars */}

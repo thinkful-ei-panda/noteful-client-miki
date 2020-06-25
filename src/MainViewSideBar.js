@@ -14,7 +14,7 @@ function MainViewSideBar() {
                     <section className="border group-column item">
                         <ul>
                             {folders}
-                            <li><NavLink to='/'>Add Folder</NavLink></li>
+                            <li><NavLink to='/addFolderView'>Add Folder</NavLink></li>
                         </ul>
                     </section>
                 )
