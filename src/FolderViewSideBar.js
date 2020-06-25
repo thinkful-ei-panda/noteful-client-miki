@@ -11,7 +11,6 @@ class FolderViewSideBar extends React.Component {
     )
 
     render () {
-        console.log(this);
         return (
             <section className="border group-column item">
                 <ul>

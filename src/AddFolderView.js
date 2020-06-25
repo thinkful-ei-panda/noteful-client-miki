@@ -11,7 +11,6 @@ class AddFolderView extends React.Component {
     static contextType = NotefulContext;
 
     validateFolderName = (name) => {  
-        console.log(name.length, 'ruff')
         if (!name) {
             const error = 'Name must be at least 1 character length!!!!!'
             this.setState({error})
@@ -24,17 +23,32 @@ class AddFolderView extends React.Component {
     }
 
     inputFolderName = (e) => {
-        console.log(e.target.value)
         const folderName = e.target.value
         this.validateFolderName(folderName);
-        // this.setState({folderName}, this.validateName(folderName))
     }
 
     addFolderRequest = (e) => {
         e.preventDefault();
-        // Add post api 
+        const folder = {name: this.state.folderName};
+        const jsonStringifiedFolder = JSON.stringify(folder);
         
-        // Go to main page
+        fetch(`http://localhost:9090/folders`, {
+            'method' : 'POST',
+            'headers' : {
+                'Content-Type': 'application/json',
+            },
+            'body' : jsonStringifiedFolder
+        })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response, 'just checking')
+                const newFolder = {
+                    id : response.id,
+                    name: this.state.folderName
+                }
+                this.context.addFolder(newFolder)
+                this.props.history.push('/')
+            })
     }
 
     render() {

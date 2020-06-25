@@ -4,7 +4,6 @@ import NotefulContext from './NotefulContext';
 
 function MainViewMain(props) {
     const deleteNoteRequest = (noteId, deleteFunction) => {
-        console.log('hi', noteId)
         fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
             .then(response => deleteFunction(noteId))
@@ -14,7 +13,6 @@ function MainViewMain(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
-                console.log(props, value)
                 const notes = value.STORE.notes.map(note => {
                     return (
                         <section className="border group-column note-margin note-padding width" key={note.id}>
