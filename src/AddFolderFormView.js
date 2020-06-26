@@ -41,12 +41,11 @@ class AddFolderFormView extends React.Component {
         })
             .then(response => response.json())
             .then(response => {
-                console.log(response, 'just checking')
                 const newFolder = {
                     id : response.id,
                     name: response.name
                 }
-                this.context.addFolder(newFolder)
+                this.context.addFolderToUI(newFolder)
                 this.props.history.push('/')
             });
     };

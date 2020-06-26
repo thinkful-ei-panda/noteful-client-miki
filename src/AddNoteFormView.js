@@ -6,33 +6,42 @@ class AddNoteFormView extends React.Component {
     state = {
         noteName: '',
         noteContent: '',
-        folderId: '', // default for now
+        folderId: '',
         error: null
     }
 
     static contextType = NotefulContext;
 
-    validateNoteName = (name) => {  
-        if (!name) {
-            const error = 'Name must be at least 1 character length!!!!!'
+    validateNoteName = (noteName) => {  
+        if (!noteName) {
+            const error = 'Name must have at least 1 character'
             this.setState({error})
-        } else if (name.length < 3) {
-            const error = 'Name must be at least 3 character length!!!!! :)'
+        } else if (noteName.length < 3) {
+            const error = 'Name must have at least 3 characters'
             this.setState({error})
         } else {
-            this.setState({noteName: name, error: null});
+            this.setState({noteName, error: null});
         }
     }
 
-    validateNoteContent = (content) => {  
-        if (!content) {
-            const error = 'Name must be at least 1 character length!!!!!'
+    validateNoteContent = (noteContent) => {  
+        if (!noteContent) {
+            const error = 'Name must have at least 1 character'
             this.setState({error})
-        } else if (content.length < 3) {
-            const error = 'Name must be at least 3 character length!!!!! :)'
+        } else if (noteContent.length < 3) {
+            const error = 'Name must have at least 3 characters'
             this.setState({error})
         } else {
-            this.setState({noteContent: content, error: null});
+            this.setState({noteContent, error: null});
+        }
+    }
+
+    validateNoteFolderId = (folderId) => {
+        if (folderId === 0) {
+            const error = 'Please choose a folder'
+            this.setState({error})
+        } else {
+            this.setState({folderId, error: null})
         }
     }
 
@@ -48,7 +57,8 @@ class AddNoteFormView extends React.Component {
 
     inputNoteFolderId = (e) => {
         const folderId = e.target.value;
-        this.setState({folderId})
+        this.validateNoteFolderId(folderId);
+        console.log(folderId)
     }
 
     addNoteRequest = (e) => {
@@ -71,15 +81,13 @@ class AddNoteFormView extends React.Component {
         fetch(`http://localhost:9090/notes`, settings)
             .then(response => response.json())
             .then(response => {
-                console.log(response, 'just checking')
                 const newNote = {
                     id : response.id,
                     name: response.name,
                     content: response.content,
                     folderid: response.folderId
                 }
-                console.log(newNote);
-                this.context.addNote(newNote)
+                this.context.addNoteToUI(newNote)
                 this.props.history.push('/')
             })
     }
@@ -91,19 +99,20 @@ class AddNoteFormView extends React.Component {
 
         return (
             <div className="border group-column item-double justify-content-center">
-                    <form className="align-self-center group-column" onSubmit={(e) => this.addNoteRequest(e)}>
-                        <label htmlFor='noteName'>Name:</label>
-                        <input className='' id='noteName' name='noteName' onChange={(e) => this.inputNoteName(e)} type='text'></input>
-                        <label htmlFor='noteContent'>Content:</label>
-                        <textarea name='noteContent' onChange={(e) => this.inputNoteContent(e)} placeholder='noteContent'></textarea>
-                        <label htmlFor='noteFolder'>Folder:</label>
-                        <select onChange={(e) => this.inputNoteFolderId(e)}>
-                            {folderOptions}
-                        </select>
-                        <button type='submit'>Add Note</button>
-                        {this.state.error ? <p>{this.state.error}</p> : ''}
-                    </form>
-                </div>
+                 <form className="align-self-center group-column" onSubmit={(e) => this.addNoteRequest(e)}>
+                    <label htmlFor='noteName'>Name:</label>
+                    <input className='' id='noteName' name='noteName' onChange={(e) => this.inputNoteName(e)} placeholder='Name' type='text'></input>
+                    <label htmlFor='noteContent'>Content:</label>
+                    <textarea name='noteContent' onChange={(e) => this.inputNoteContent(e)} placeholder='Content'></textarea>
+                    <label htmlFor='noteFolder'>Folder:</label>
+                    <select onChange={(e) => this.inputNoteFolderId(e)}>
+                        <option value={0}>Select Folder</option>
+                        {folderOptions}
+                    </select>
+                    <button type='submit'>Add Note</button>
+                    {this.state.error ? <p>{this.state.error}</p> : ''}
+                </form>
+            </div>
         )
     }
 

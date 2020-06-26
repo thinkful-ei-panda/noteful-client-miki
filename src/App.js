@@ -11,22 +11,21 @@ import FolderViewMain from './FolderViewMain';
 import NoteViewMain from './NoteViewMain';
 import NotefulContext from './NotefulContext';
 import NotefulErrorBoundary from './NotefulErrorBoundary';
-import STORE from './dummy-store';
 import './App.css';
 
+// Code could be improved with better information architecture.
 class App extends React.Component {
   state = {
 
-    STORE,
+    STORE: {
+      folders: [],
+      notes: []
+    },
+    
     error: {
       code: null,
       message: null
     }
-
-    // STORE: {
-    //   folders: [],
-    //   notes: []
-    // }
 
   }
 
@@ -48,24 +47,29 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-    fetch('http://localhost:9090/db')
-      .then(response => {
-        console.log(response)
-        // if (!response.ok) {
-        //   this.setState({})
-        // }
-        
-        
-        return response.json()})
-      .then(response => this.setState({STORE: response}))
+   this.get()
   };
 
+  get = () => {
+    fetch('http://localhost:9090/db')
+    .then(response => {
+      // if (!response.ok) {
+      //   this.setState({})
+      // }
+      
+      
+      return response.json()})
+    .then(response => this.setState({STORE: response}))
+  }
+
   render() {
+    // this.get();
+
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,
       addNoteToUI: this.addNoteToUI,
-      deleteNoteFromUI: this.deleteNoteFromUI
+      deleteNoteFromUI: this.deleteNoteFromUI,
     };
 
     return (
