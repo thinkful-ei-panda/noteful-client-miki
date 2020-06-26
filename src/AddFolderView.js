@@ -54,13 +54,13 @@ class AddFolderView extends React.Component {
     render() {
         return (
             <div className="border group-column item-double justify-content-center">
-                    <form className="align-self-center" onSubmit={(e) => this.addFolderRequest(e)}>
-                        <label htmlFor='folderName'>Name:</label>
-                        <input className='' id='folderName' name='folderName' onChange={(e) => this.inputFolderName(e)} type='text'></input>
-                        <button type='submit'>Add Folder</button>
-                        {this.state.error ? <p>{this.state.error}</p> : ''}
-                    </form>
-                </div>
+                <form className="align-self-center" onSubmit={(e) => this.addFolderRequest(e)}>
+                    <label htmlFor='folderName'>Name:</label>
+                    <input className='' id='folderName' name='folderName' onChange={(e) => this.inputFolderName(e)} type='text'></input>
+                    <button type='submit'>Add Folder</button>
+                    {this.state.error ? <p>{this.state.error}</p> : ''}
+                </form>
+            </div>
         )
     }
 

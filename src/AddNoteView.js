@@ -68,14 +68,6 @@ class AddNoteView extends React.Component {
             'body' : jsonStringifiedNote
         }
 
-
-        // Promise.all([
-        //     fetch(`http://localhost:9090/folders`),
-        //     fetch(`http://localhost:9090/notes`, settings)
-        // ])
-        //     .then(response => response.json())
-        //     .then(response => console.log(response))
-
         fetch(`http://localhost:9090/notes`, settings)
             .then(response => response.json())
             .then(response => {

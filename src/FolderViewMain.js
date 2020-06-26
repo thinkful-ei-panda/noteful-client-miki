@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 function FolderViewMain(props) {
@@ -35,5 +36,9 @@ function FolderViewMain(props) {
         </NotefulContext.Consumer>
     )
 };
+
+FolderViewMain.propTypes = {
+    props: propTypes.object
+}
 
 export default withRouter(FolderViewMain);

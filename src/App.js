@@ -10,6 +10,7 @@ import MainViewMain from './MainViewMain';
 import FolderViewMain from './FolderViewMain';
 import NoteViewMain from './NoteViewMain';
 import NotefulContext from './NotefulContext';
+import NotefulErrorBoundary from './NotefulErrorBoundary';
 import STORE from './dummy-store';
 import './App.css';
 
@@ -26,8 +27,8 @@ class App extends React.Component {
   }
 
   addFolder = (newFolder) => {
-    this.state.STORE.folders.push(newFolder)
-    const newFolders = this.state.STORE.folders
+    const newFolders = this.state.STORE.folders;
+    newFolders.push(newFolder);
     this.setState({STORE: {folders: newFolders, notes: [...this.state.STORE.notes]}})
   }
 
@@ -65,38 +66,40 @@ class App extends React.Component {
             <NotefulContext.Provider
               value={contextValue}
               >
+              
+              <NotefulErrorBoundary>
+                {/* Add Form Route */}
+                <Route exact path='/addFolderView' component={MainViewSideBar} />
+                <Route exact path='/addFolderView' component={AddFolderView} />
 
-              {/* Add Form Route */}
-              <Route exact path='/addFolderView' component={MainViewSideBar} />
-              <Route exact path='/addFolderView' component={AddFolderView} />
+                {/* Add Note Route */}
+                <Route exact path='/addNoteView' component={MainViewSideBar} />
+                <Route exact path='/addNoteView' component={AddNoteView} />
+              </NotefulErrorBoundary>
 
-              {/* Add Note Route */}
-              <Route exact path='/addNoteView' component={MainViewSideBar} />
-              <Route exact path='/addNoteView' component={AddNoteView} />
+              <NotefulErrorBoundary>
+                {/* Sidebars */}
+                {/* Main Route */}
+                <Route exact path='/' component={MainViewSideBar} />
 
+                {/* Dynamic Folder Route */}
+                <Route exact path='/folder/:folderId' component={FolderViewSideBar} />
 
-              {/* Sidebars */}
-              {/* Main Route */}
-              <Route exact path='/' component={MainViewSideBar} />
+                {/* Dynamic Note Route */}
+                <Route exact path='/note/:noteId' component={NoteViewSideBar} />
+              </NotefulErrorBoundary>
 
-              {/* Dynamic Folder Route */}
-              <Route exact path='/folder/:folderId' component={FolderViewSideBar} />
+              <NotefulErrorBoundary>
+                {/* Main Sections */}
+                {/* Main Route */}
+                <Route exact path='/' component={MainViewMain} />
+                  
+                {/* Dynamic Folder Route */}
+                <Route exact path='/folder/:folderId' component={FolderViewMain} />
 
-              {/* Dynamic Note Route */}
-              <Route exact path='/note/:noteId' component={NoteViewSideBar} />
-
-
-
-              {/* Main Sections */}
-              {/* Main Route */}
-              <Route exact path='/' component={MainViewMain} />
-                
-              {/* Dynamic Folder Route */}
-              <Route exact path='/folder/:folderId' component={FolderViewMain} />
-
-              {/* Dynamic Note Route */}
-              <Route exact path='/note/:noteId' component={NoteViewMain} />
-
+                {/* Dynamic Note Route */}
+                <Route exact path='/note/:noteId' component={NoteViewMain} />
+              </NotefulErrorBoundary>
 
 
             </NotefulContext.Provider>

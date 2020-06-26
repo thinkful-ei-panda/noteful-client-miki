@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 
@@ -31,6 +32,10 @@ function NoteViewMain(props) {
             }}
         </NotefulContext.Consumer>
     )
+};
+
+NoteViewMain.propTypes = {
+    props: propTypes.object
 };
 
 export default withRouter(NoteViewMain);

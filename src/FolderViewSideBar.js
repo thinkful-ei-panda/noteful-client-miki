@@ -6,15 +6,15 @@ import NotefulContext from './NotefulContext';
 class FolderViewSideBar extends React.Component {
     static contextType = NotefulContext;
 
-    folders = this.context.STORE.folders.map(folder => 
-        <li key={folder.id}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
-    )
-
     render () {
+        const folders = this.context.STORE.folders.map(folder => 
+            <li key={folder.id}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
+        )
+        
         return (
             <section className="border group-column item">
                 <ul>
-                    {this.folders}
+                    {folders}
                     <li><NavLink to='/'>Add Folder</NavLink></li>
                 </ul>
             </section>

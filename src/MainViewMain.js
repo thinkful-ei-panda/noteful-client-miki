@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 function MainViewMain(props) {
@@ -34,5 +35,9 @@ function MainViewMain(props) {
         </NotefulContext.Consumer>
     )
 };
+
+MainViewMain.propTypes = {
+    props: propTypes.func.isRequired
+}
 
 export default withRouter(MainViewMain);
