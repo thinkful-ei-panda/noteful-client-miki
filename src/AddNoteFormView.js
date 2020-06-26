@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 
-class AddNoteView extends React.Component {
+class AddNoteFormView extends React.Component {
     state = {
         noteName: '',
         noteContent: '',
@@ -109,4 +109,4 @@ class AddNoteView extends React.Component {
 
 }
 
-export default withRouter(AddNoteView);
+export default withRouter(AddNoteFormView);

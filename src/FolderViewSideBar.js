@@ -7,6 +7,7 @@ class FolderViewSideBar extends React.Component {
     static contextType = NotefulContext;
 
     render () {
+        console.log(this)
         const folders = this.context.STORE.folders.map(folder => 
             <li key={folder.id}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
         )

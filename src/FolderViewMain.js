@@ -4,11 +4,11 @@ import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 function FolderViewMain(props) {
-    const deleteNoteRequest = (noteId, deleteFunction) => {
+    const deleteNoteRequest = (noteId, deleteNoteFromUI) => {
         console.log(noteId, 'ruff')
         fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
-            .then(response => deleteFunction(noteId))
+            .then(response => deleteNoteFromUI(noteId))
             .then(props.history.push('/'))
     }
 
@@ -21,7 +21,7 @@ function FolderViewMain(props) {
                             <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
                             <div className="group-row note-group-row">
                                 <p>Modified: {note.modified}</p>
-                                <button onClick={() => deleteNoteRequest(note.id, value.deleteNote)}>Delete Note</button>
+                                <button onClick={() => deleteNoteRequest(note.id, value.deleteNoteFromUi)}>Delete Note</button>
                             </div>
                         </section>
                     )
@@ -38,7 +38,8 @@ function FolderViewMain(props) {
 };
 
 FolderViewMain.propTypes = {
-    props: propTypes.object
+    history: propTypes.object,
+    match: propTypes.object
 }
 
 export default withRouter(FolderViewMain);

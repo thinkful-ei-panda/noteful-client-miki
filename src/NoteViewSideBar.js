@@ -7,6 +7,7 @@ function NoteViewSideBar(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
+                console.log(props)
                 const currentNote = value.STORE.notes.find(note => note.id === props.match.params.noteId)
 
                 const currentFolder = value.STORE.folders.find(folder => folder.id === currentNote.folderId)
@@ -23,7 +24,7 @@ function NoteViewSideBar(props) {
 }
 
 NoteViewSideBar.propTypes = {
-    props: propTypes.object.isRequired
+    match: propTypes.object.isRequired
 }
 
 export default withRouter(NoteViewSideBar);

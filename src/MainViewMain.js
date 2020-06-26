@@ -4,10 +4,10 @@ import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 function MainViewMain(props) {
-    const deleteNoteRequest = (noteId, deleteFunction) => {
+    const deleteNoteRequest = (noteId, deleteNoteFromUI) => {
         fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
-            .then(response => deleteFunction(noteId))
+            .then(response => deleteNoteFromUI(noteId))
             .then(props.history.push('/'))
     }
 
@@ -20,11 +20,11 @@ function MainViewMain(props) {
                             <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
                             <div className="group-row note-group-row">
                                 <p>Modified: {note.modified}</p>
-                                <button onClick={() => deleteNoteRequest(note.id, value.deleteNote)}>Delete Note</button>
+                                <button onClick={() => deleteNoteRequest(note.id, value.deleteNoteFromUI)}>Delete Note</button>
                             </div>
                         </section>
-                    )
-                })
+                    );
+                });
             
                 return (
                     <section className="border group-column item-double"> 
@@ -37,7 +37,7 @@ function MainViewMain(props) {
 };
 
 MainViewMain.propTypes = {
-    props: propTypes.func.isRequired
+    history: propTypes.object
 }
 
 export default withRouter(MainViewMain);

@@ -4,10 +4,10 @@ import { withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
 
 function NoteViewMain(props) {
-    const deleteNoteRequest = (noteId, deleteFunction) => {
+    const deleteNoteRequest = (noteId, deleteNoteFromUI) => {
         fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
-            .then(response => deleteFunction(noteId))
+            .then(response => deleteNoteFromUI(noteId))
             .then(props.history.push('/'))
     }
 
@@ -22,7 +22,7 @@ function NoteViewMain(props) {
                                 <h2>{currentNote.name}</h2>
                                 <div className="group-row note-group-row">
                                     <p>Date modified on: {currentNote.modified}</p>
-                                    <button onClick={() => deleteNoteRequest(currentNote.id, value.deleteNote)}>Delete Note</button>
+                                    <button onClick={() => deleteNoteRequest(currentNote.id, value.deleteNoteFromUI)}>Delete Note</button>
                                 </div>
                             </div>
                             <p className="note-margin width">{currentNote.content}</p>
@@ -35,7 +35,8 @@ function NoteViewMain(props) {
 };
 
 NoteViewMain.propTypes = {
-    props: propTypes.object
+    history: propTypes.object,
+    match: propTypes.object
 };
 
 export default withRouter(NoteViewMain);
