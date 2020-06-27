@@ -6,7 +6,7 @@ class AddNoteFormView extends React.Component {
     state = {
         noteName: '',
         noteContent: '',
-        folderId: '',
+        folderId: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
         error: null
     }
 
@@ -36,15 +36,6 @@ class AddNoteFormView extends React.Component {
         }
     }
 
-    validateNoteFolderId = (folderId) => {
-        if (folderId === 0) {
-            const error = 'Please choose a folder'
-            this.setState({error})
-        } else {
-            this.setState({folderId, error: null})
-        }
-    }
-
     inputNoteName = (e) => {
         const noteName = e.target.value;
         this.validateNoteName(noteName);
@@ -57,8 +48,7 @@ class AddNoteFormView extends React.Component {
 
     inputNoteFolderId = (e) => {
         const folderId = e.target.value;
-        this.validateNoteFolderId(folderId);
-        console.log(folderId)
+        this.setState({folderId});
     }
 
     addNoteRequest = (e) => {
@@ -85,7 +75,7 @@ class AddNoteFormView extends React.Component {
                     id : response.id,
                     name: response.name,
                     content: response.content,
-                    folderid: response.folderId
+                    folderId: response.folderId
                 }
                 this.context.addNoteToUI(newNote)
                 this.props.history.push('/')
