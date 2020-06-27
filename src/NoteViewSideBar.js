@@ -10,9 +10,11 @@ function NoteViewSideBar(props) {
                 const currentNote = value.STORE.notes.find(note => note.id === props.match.params.noteId)
                 const currentFolder = value.STORE.folders.find(folder => folder.id === currentNote.folderId)
                 return (
-                    <section className="group-column item">
-                        <Link to='/'>Go Back</Link>
-                        <h2>Folder: {currentFolder.name}</h2>
+                    <section className="border group-column item">
+                        <ul>
+                            <li><Link to='/'>Go Back</Link></li>
+                            <li><Link to={`/folder/${currentFolder.folderId}`}>Folder: {currentFolder.name}</Link></li>
+                        </ul>
                     </section>
                 )
             }}

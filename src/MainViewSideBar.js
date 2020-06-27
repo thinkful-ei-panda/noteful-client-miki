@@ -19,6 +19,10 @@ function MainViewSideBar() {
                             <li>
                                 <NavLink to='/addFolderFormView'>Add Folder</NavLink>
                             </li>
+                            <li>
+                                <NavLink to='/addNoteFormView'>Add Note</NavLink>
+                            </li>
+
                         </ul>
                     </section>
                 )

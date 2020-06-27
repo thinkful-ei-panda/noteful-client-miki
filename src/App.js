@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Header from './Header';
+import ErrorView from './ErrorView';
 import AddFolderFormView from './AddFolderFormView';
 import AddNoteFormView from './AddNoteFormView';
 import MainViewSideBar from './MainViewSideBar';
@@ -47,24 +48,24 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-   this.get()
-  };
-
-  get = () => {
+    let error;
     fetch('http://localhost:9090/db')
     .then(response => {
-      // if (!response.ok) {
-      //   this.setState({})
-      // }
-      
-      
+      if (!response.ok) {
+       error.code = response.code;
+      }
       return response.json()})
-    .then(response => this.setState({STORE: response}))
+    .then(response => {
+      if (error) {
+        error.message = response.message
+        return Promise.reject(error)
+      }
+      this.setState({STORE: response});
+    })
+    .catch(error => this.setState({error}))
   }
 
   render() {
-    // this.get();
-
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,
@@ -72,12 +73,26 @@ class App extends React.Component {
       deleteNoteFromUI: this.deleteNoteFromUI,
     };
 
+    if (this.state.error.message) {
+      return (
+        <>
+          <Header />
+          <main className="wrapper">
+            <div className="group-row">
+              <ErrorView error={this.state.error}/>
+            </div>
+          </main>
+        </> 
+      )
+    }
+
     return (
       <>
         <Header />
         <main className="wrapper">
           <div className="group-row">
             
+
             <NotefulContext.Provider
               value={contextValue}
               >

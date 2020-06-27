@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <header className="border group-column">
-            <h1><Link to='/'>Noteful</Link></h1>
-            <p><Link to='/addNoteFormView'>Add Note</Link></p>
+        <header className="border wrapper">
+            <h1><Link className="main-link" to='/'>Noteful</Link></h1>
         </header>
     )
 }

@@ -14,11 +14,12 @@ function NoteViewMain(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
+                console.log(value)
                 const currentNote = value.STORE.notes.find(note => note.id === props.match.params.noteId)
                 return (
-                    <section className="group-column item-double">
+                    <section className="border group-column item-double">
                         <section>
-                            <div className="border group-column note-margin note-padding width">
+                            <div className="border group-column note-margin width">
                                 <h2>{currentNote.name}</h2>
                                 <div className="group-row note-group-row">
                                     <p>Date modified on: {currentNote.modified}</p>

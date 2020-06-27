@@ -4,34 +4,36 @@ import NotefulContext from './NotefulContext';
 
 class AddFolderFormView extends React.Component {
     state = {
-        folderName: '',
+        newfolderName: '',
         error: null
     };
 
     static contextType = NotefulContext;
 
-    validateFolderName = (name) => {  
-        if (!name) {
+    validateFolderName = (newFolderName) => {  
+        if (!newFolderName) {
             const error = 'Name must be at least 1 character long';
             this.setState({error});
-        } else if (name.length < 3) {
+        } else if (newFolderName.length < 3) {
             const error = 'Name must be at least 3 characters long';
             this.setState({error});
         } else {
-            this.setState({folderName: name, error: null});
+            this.setState({newFolderName, error: null});
         }
     };
 
     inputFolderName = (e) => {
-        const folderName = e.target.value;
-        this.validateFolderName(folderName);
+        const newFolderName = e.target.value;
+        this.validateFolderName(newFolderName);
     };
 
     addFolderRequest = (e) => {
         e.preventDefault();
-        const addFolderData = {name: this.state.folderName};
-        const jsonStringifiedFolderData = JSON.stringify(addFolderData);
-        
+        const newFolder = {name: this.state.newFolderName};
+        const jsonStringifiedFolderData = JSON.stringify(newFolder);
+
+        let error;
+
         fetch(`http://localhost:9090/folders`, {
             'method' : 'POST',
             'headers' : {
@@ -39,34 +41,39 @@ class AddFolderFormView extends React.Component {
             },
             'body' : jsonStringifiedFolderData
         })
-            .then(response => response.json())
             .then(response => {
+                if (!response.ok) {
+                    error.code = response.code;
+                }              
+                return response.json()
+            })
+            .then(response => {
+                if (error) {
+                    error.message = response.message;
+                    return Promise.reject(error);
+                }
                 const newFolder = {
                     id : response.id,
                     name: response.name
                 }
                 this.context.addFolderToUI(newFolder)
                 this.props.history.push('/')
-            });
+            })
+            .catch(error => this.setState({error}))
     };
 
     render() {
         return (
             <div className="border group-column item-double justify-content-center">
-
                 <form className="align-self-center" onSubmit={(e) => this.addFolderRequest(e)}>
-
-                    <label htmlFor='folderName'>Name:</label>
-
-                    <input className='' id='folderName' name='folderName' onChange={(e) => this.inputFolderName(e)} type='text'></input>
-
+                    <label htmlFor='newFolderName'>Name:</label>
+                    <input className='' id='newFolderName' name='newFolderName' onChange={(e) => this.inputFolderName(e)} type='text'></input>
                     <button type='submit'>Add Folder</button>
 
                     {/* Should this be its own Component? */}
                     {this.state.error ? <p>{this.state.error}</p> : ''}
-
+                    
                 </form>
-
             </div>
         );
     };

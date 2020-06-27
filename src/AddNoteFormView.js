@@ -68,15 +68,25 @@ class AddNoteFormView extends React.Component {
             'body' : jsonStringifiedNote
         }
 
+        let error;
         fetch(`http://localhost:9090/notes`, settings)
-            .then(response => response.json())
             .then(response => {
+                if (!response.ok) {
+                    error.code = response.code;
+                }              
+                return response.json()
+            })
+            .then(response => {
+                if (error) {
+                    error.message = response.message;
+                    return Promise.reject(error);
+                }
                 const newNote = {
                     id : response.id,
                     name: response.name,
                     content: response.content,
                     folderId: response.folderId
-                }
+                }                
                 this.context.addNoteToUI(newNote)
                 this.props.history.push('/')
             })
@@ -89,19 +99,26 @@ class AddNoteFormView extends React.Component {
 
         return (
             <div className="border group-column item-double justify-content-center">
+
                  <form className="align-self-center group-column" onSubmit={(e) => this.addNoteRequest(e)}>
+
                     <label htmlFor='noteName'>Name:</label>
                     <input className='' id='noteName' name='noteName' onChange={(e) => this.inputNoteName(e)} placeholder='Name' type='text'></input>
+
                     <label htmlFor='noteContent'>Content:</label>
                     <textarea name='noteContent' onChange={(e) => this.inputNoteContent(e)} placeholder='Content'></textarea>
+
                     <label htmlFor='noteFolder'>Folder:</label>
                     <select onChange={(e) => this.inputNoteFolderId(e)}>
                         <option value={0}>Select Folder</option>
                         {folderOptions}
                     </select>
+
                     <button type='submit'>Add Note</button>
+                    
                     {this.state.error ? <p>{this.state.error}</p> : ''}
                 </form>
+
             </div>
         )
     }

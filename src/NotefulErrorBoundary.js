@@ -15,7 +15,14 @@ class NotefulErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {
             return (
-                <h2>Error</h2>
+                <div className="group-column">
+                    <h2>
+                        Oops, something went wrong!
+                    </h2>
+                    <p>
+                        {this.props.error.code}: {this.props.error.message}
+                    </p>
+                </div>
             )
         };
 

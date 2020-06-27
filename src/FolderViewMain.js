@@ -5,6 +5,7 @@ import NotefulContext from './NotefulContext';
 
 function FolderViewMain(props) {
     const deleteNoteRequest = (noteId, deleteNoteFromUI) => {
+        console.log(noteId, 'ruff')
         fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
             .then(response => response.json())
             .then(response => deleteNoteFromUI(noteId))
