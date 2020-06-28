@@ -72,7 +72,7 @@ class AddFolderFormView extends React.Component {
 
                     {/* Should this be its own Component? */}
                     {this.state.error ? <p>{this.state.error}</p> : ''}
-                    
+
                 </form>
             </div>
         );

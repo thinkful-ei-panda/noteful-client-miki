@@ -6,7 +6,7 @@ function Header() {
         <header className="border wrapper">
             <h1><Link className="main-link" to='/'>Noteful</Link></h1>
         </header>
-    )
-}
+    );
+};
 
 export default Header;

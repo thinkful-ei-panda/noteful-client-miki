@@ -8,7 +8,7 @@ class AddNoteFormView extends React.Component {
         noteContent: '',
         folderId: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
         error: null
-    }
+    };
 
     static contextType = NotefulContext;
 
@@ -16,48 +16,47 @@ class AddNoteFormView extends React.Component {
         if (!noteName) {
             const error = 'Name must have at least 1 character'
             this.setState({error})
-        } else if (noteName.length < 3) {
-            const error = 'Name must have at least 3 characters'
-            this.setState({error})
         } else {
             this.setState({noteName, error: null});
         }
-    }
+    };
 
     validateNoteContent = (noteContent) => {  
         if (!noteContent) {
             const error = 'Name must have at least 1 character'
             this.setState({error})
-        } else if (noteContent.length < 3) {
-            const error = 'Name must have at least 3 characters'
-            this.setState({error})
         } else {
             this.setState({noteContent, error: null});
         }
-    }
+    };
 
     inputNoteName = (e) => {
         const noteName = e.target.value;
         this.validateNoteName(noteName);
-    }
+    };
 
     inputNoteContent = (e) => {
         const noteContent = e.target.value;
         this.validateNoteContent(noteContent);
-    }
+    };
 
     inputNoteFolderId = (e) => {
         const folderId = e.target.value;
         this.setState({folderId});
-    }
+    };
 
     addNoteRequest = (e) => {
         e.preventDefault();
+
+        const dateNoteModifiedObj = new Date();
+        const dateNoteModified = dateNoteModifiedObj.toDateString();
+
         const note = {
             name: this.state.noteName,
             content: this.state.noteContent,
             folderId: this.state.folderId
-        }
+        };
+
         const jsonStringifiedNote = JSON.stringify(note);
 
         const settings = {
@@ -66,7 +65,7 @@ class AddNoteFormView extends React.Component {
                 'Content-Type': 'application/json',
             },
             'body' : jsonStringifiedNote
-        }
+        };
 
         let error;
         fetch(`http://localhost:9090/notes`, settings)
@@ -85,18 +84,19 @@ class AddNoteFormView extends React.Component {
                     id : response.id,
                     name: response.name,
                     content: response.content,
-                    folderId: response.folderId
+                    folderId: response.folderId,
+                    modified: dateNoteModified
                 }                
                 this.context.addNoteToUI(newNote)
                 this.props.history.push('/')
             })
-    }
+            .catch(error => this.setState({error}))
+    };
 
     render() {
         const folderOptions = this.context.STORE.folders.map(folder => 
             folder.name ? <option key={folder.id} value={folder.id}>{folder.name}</option> : ''
-        )
-
+        );
         return (
             <div className="border group-column item-double justify-content-center">
 
@@ -120,9 +120,9 @@ class AddNoteFormView extends React.Component {
                 </form>
 
             </div>
-        )
-    }
+        );
+    };
 
-}
+};
 
 export default withRouter(AddNoteFormView);

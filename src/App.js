@@ -14,7 +14,7 @@ import NotefulContext from './NotefulContext';
 import NotefulErrorBoundary from './NotefulErrorBoundary';
 import './App.css';
 
-// Code could be improved with better information architecture.
+// Code could be improved with better information architecture. 
 class App extends React.Component {
   state = {
 
@@ -23,10 +23,7 @@ class App extends React.Component {
       notes: []
     },
     
-    error: {
-      code: null,
-      message: null
-    }
+    error: {}
 
   }
 
@@ -47,12 +44,12 @@ class App extends React.Component {
     this.setState({STORE: {folders: [...this.state.STORE.folders], notes: newNotes}});
   };
 
-  componentDidMount = () => {
+  get = () => {
     let error;
     fetch('http://localhost:9090/db')
     .then(response => {
       if (!response.ok) {
-       error.code = response.code;
+       error.code = response.statusText;
       }
       return response.json()})
     .then(response => {
@@ -65,12 +62,17 @@ class App extends React.Component {
     .catch(error => this.setState({error}))
   }
 
+  componentDidMount = () => {
+    this.get();
+  }
+
   render() {
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,
       addNoteToUI: this.addNoteToUI,
       deleteNoteFromUI: this.deleteNoteFromUI,
+      get: this.get
     };
 
     if (this.state.error.message) {
@@ -79,7 +81,7 @@ class App extends React.Component {
           <Header />
           <main className="wrapper">
             <div className="group-row">
-              <ErrorView error={this.state.error}/>
+              <ErrorView error={this.state.error.message}/>
             </div>
           </main>
         </> 
@@ -123,7 +125,7 @@ class App extends React.Component {
 
 
 
-              <NotefulErrorBoundary>
+              {/* <NotefulErrorBoundary> */}
                 {/* Main Sections */}
                 {/* Main Route */}
                 <Route exact path='/' component={MainViewMain} />
@@ -133,7 +135,7 @@ class App extends React.Component {
 
                 {/* Dynamic Note Route */}
                 <Route exact path='/note/:noteId' component={NoteViewMain} />
-              </NotefulErrorBoundary>
+              {/* </NotefulErrorBoundary> */}
 
             </NotefulContext.Provider>
 

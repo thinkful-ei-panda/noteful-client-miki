@@ -15,11 +15,13 @@ function MainViewMain(props) {
         <NotefulContext.Consumer>
             {value => {
                 const notes = value.STORE.notes.map(note => {
+                    let dateNoteModifiedObj = new Date(note.modified);
+                    let dateNoteModified = dateNoteModifiedObj.toDateString();
                     return (
                         <section className="border group-column note-margin note-padding width" key={note.id}>
                             <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
                             <div className="group-row note-group-row">
-                                <p>Modified: {note.modified}</p>
+                                <p>Date modified on: {dateNoteModified}</p>
                                 <button onClick={() => deleteNoteRequest(note.id, value.deleteNoteFromUI)}>Delete Note</button>
                             </div>
                         </section>
@@ -33,11 +35,11 @@ function MainViewMain(props) {
                 );
             }}
         </NotefulContext.Consumer>
-    )
+    );
 };
 
 MainViewMain.propTypes = {
     history: propTypes.object
-}
+};
 
 export default withRouter(MainViewMain);
