@@ -14,9 +14,6 @@ class AddFolderFormView extends React.Component {
         if (!newFolderName) {
             const error = 'Name must be at least 1 character long';
             this.setState({error});
-        } else if (newFolderName.length < 3) {
-            const error = 'Name must be at least 3 characters long';
-            this.setState({error});
         } else {
             this.setState({newFolderName, error: null});
         }
