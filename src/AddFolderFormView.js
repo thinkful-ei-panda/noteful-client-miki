@@ -67,7 +67,7 @@ class AddFolderFormView extends React.Component {
             <div className="border group-column item-double justify-content-center">
                 <form className="align-self-center" onSubmit={(e) => this.addFolderRequest(e)}>
                     <label htmlFor='newFolderName'>Name:</label>
-                    <input className='' id='newFolderName' name='newFolderName' onChange={(e) => this.inputFolderName(e)} type='text'></input>
+                    <input className='' id='newFolderName' name='newFolderName' onChange={(e) => this.inputFolderName(e)} type='text' required></input>
                     <button type='submit'>Add Folder</button>
 
                     {/* Should this be its own Component? */}

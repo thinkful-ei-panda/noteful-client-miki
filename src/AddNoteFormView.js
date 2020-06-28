@@ -4,40 +4,44 @@ import NotefulContext from './NotefulContext';
 
 class AddNoteFormView extends React.Component {
     state = {
-        noteName: '',
-        noteContent: '',
+        newNoteName: '',
+        newNoteContent: '',
         folderId: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
         error: null
     };
 
     static contextType = NotefulContext;
 
-    validateNoteName = (noteName) => {  
-        if (!noteName) {
+    // Validation Handlers
+
+    validateNoteName = (newNoteName) => {  
+        if (!newNoteName) {
             const error = 'Name must have at least 1 character'
             this.setState({error})
         } else {
-            this.setState({noteName, error: null});
+            this.setState({newNoteName, error: null});
         }
     };
 
-    validateNoteContent = (noteContent) => {  
-        if (!noteContent) {
+    validateNoteContent = (newNoteContent) => {  
+        if (!newNoteContent) {
             const error = 'Name must have at least 1 character'
             this.setState({error})
         } else {
-            this.setState({noteContent, error: null});
+            this.setState({newNoteContent, error: null});
         }
     };
+
+    // Event Handlers
 
     inputNoteName = (e) => {
-        const noteName = e.target.value;
-        this.validateNoteName(noteName);
+        const newNoteName = e.target.value;
+        this.validateNoteName(newNoteName);
     };
 
     inputNoteContent = (e) => {
-        const noteContent = e.target.value;
-        this.validateNoteContent(noteContent);
+        const newNoteContent = e.target.value;
+        this.validateNoteContent(newNoteContent);
     };
 
     inputNoteFolderId = (e) => {
@@ -45,19 +49,22 @@ class AddNoteFormView extends React.Component {
         this.setState({folderId});
     };
 
+    // Network Request
+
     addNoteRequest = (e) => {
         e.preventDefault();
 
         const dateNoteModifiedObj = new Date();
         const dateNoteModified = dateNoteModifiedObj.toDateString();
 
-        const note = {
-            name: this.state.noteName,
-            content: this.state.noteContent,
-            folderId: this.state.folderId
+        const newNote = {
+            name: this.state.newNoteName,
+            content: this.state.newNoteContent,
+            folderId: this.state.folderId,
+            modified: dateNoteModified
         };
 
-        const jsonStringifiedNote = JSON.stringify(note);
+        const jsonStringifiedNote = JSON.stringify(newNote);
 
         const settings = {
             'method' : 'POST',
@@ -85,7 +92,7 @@ class AddNoteFormView extends React.Component {
                     name: response.name,
                     content: response.content,
                     folderId: response.folderId,
-                    modified: dateNoteModified
+                    modified: response.modified
                 }                
                 this.context.addNoteToUI(newNote)
                 this.props.history.push('/')
@@ -102,14 +109,14 @@ class AddNoteFormView extends React.Component {
 
                  <form className="align-self-center group-column" onSubmit={(e) => this.addNoteRequest(e)}>
 
-                    <label htmlFor='noteName'>Name:</label>
-                    <input className='' id='noteName' name='noteName' onChange={(e) => this.inputNoteName(e)} placeholder='Name' type='text'></input>
+                    <label htmlFor='newNoteName'>Name:</label>
+                    <input className='' id='newNoteName' name='newNoteName' onChange={(e) => this.inputNoteName(e)} placeholder='Name' type='text' required></input>
 
-                    <label htmlFor='noteContent'>Content:</label>
-                    <textarea name='noteContent' onChange={(e) => this.inputNoteContent(e)} placeholder='Content'></textarea>
+                    <label htmlFor='newNoteContent'>Content:</label>
+                    <textarea name='newNoteContent' onChange={(e) => this.inputNoteContent(e)} placeholder='Content' required></textarea>
 
-                    <label htmlFor='noteFolder'>Folder:</label>
-                    <select onChange={(e) => this.inputNoteFolderId(e)}>
+                    <label htmlFor='newNoteFolder'>Folder:</label>
+                    <select id='newNoteFolder' onChange={(e) => this.inputNoteFolderId(e)}>
                         <option value={0}>Select Folder</option>
                         {folderOptions}
                     </select>
