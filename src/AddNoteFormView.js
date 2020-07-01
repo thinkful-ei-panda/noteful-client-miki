@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 class AddNoteFormView extends React.Component {
@@ -95,7 +96,7 @@ class AddNoteFormView extends React.Component {
                     modified: response.modified
                 }                
                 this.context.addNoteToUI(newNote)
-                this.props.history.push('/')
+                this.props.history.push(`/folder/${response.folderId}`)
             })
             .catch(error => this.setState({error}))
     };
@@ -117,7 +118,6 @@ class AddNoteFormView extends React.Component {
 
                     <label htmlFor='newNoteFolder'>Folder:</label>
                     <select id='newNoteFolder' onChange={(e) => this.inputNoteFolderId(e)}>
-                        <option value={0}>Select Folder</option>
                         {folderOptions}
                     </select>
 
@@ -129,7 +129,10 @@ class AddNoteFormView extends React.Component {
             </div>
         );
     };
-
 };
+
+AddNoteFormView.propTypes = {
+    history: propTypes.object
+}
 
 export default withRouter(AddNoteFormView);

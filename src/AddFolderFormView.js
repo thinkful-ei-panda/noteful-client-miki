@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
 
 class AddFolderFormView extends React.Component {
@@ -74,7 +75,11 @@ class AddFolderFormView extends React.Component {
             </div>
         );
     };
-
 };
+
+
+AddFolderFormView.propTypes = {
+    history: propTypes.object
+}
 
 export default withRouter(AddFolderFormView);

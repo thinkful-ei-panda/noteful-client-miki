@@ -15,14 +15,15 @@ function MainViewSideBar() {
                 return (
                     <section className="border group-column item">
                         <ul>
+                            <li>
+                                <NavLink to='/addFolderFormView' className='action'>+ Add Folder</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/addNoteFormView' className='action'>+ Add Note</NavLink>
+                            </li>
+                        </ul>
+                        <ul>
                             {folders}
-                            <li>
-                                <NavLink to='/addFolderFormView'>Add Folder</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to='/addNoteFormView'>Add Note</NavLink>
-                            </li>
-
                         </ul>
                     </section>
                 )

@@ -13,15 +13,16 @@ class FolderViewSideBar extends React.Component {
         return (
             <section className="border group-column item">
                 <ul>
-                    {folders}
                     <li>
-                        <NavLink to='/addFolderFormView' activeClassName='selected'>Add Folder</NavLink>
+                        <NavLink to='/addFolderFormView' className='action'>+ Add Folder</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/addNoteFormView' activeClassName='selected'>Add Note</NavLink>
+                        <NavLink to='/addNoteFormView' className='action'>+ Add Note</NavLink>
                     </li>
                 </ul>
-
+                <ul>
+                    {folders}
+                </ul> 
             </section>
         );
     };
