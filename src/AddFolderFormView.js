@@ -2,18 +2,21 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
+import config from './config';
 
 class AddFolderFormView extends React.Component {
     state = {
         newfolderName: '',
-        error: null
+        error: {
+            message: null
+        },
     };
 
     static contextType = NotefulContext;
 
     validateFolderName = (newFolderName) => {  
         if (!newFolderName) {
-            const error = 'Name must be at least 1 character long';
+            const error = {message: 'Name must be at least 1 character long'};
             this.setState({error});
         } else {
             this.setState({newFolderName, error: null});
@@ -27,14 +30,15 @@ class AddFolderFormView extends React.Component {
 
     addFolderRequest = (e) => {
         e.preventDefault();
-        const newFolder = {name: this.state.newFolderName};
+        const newFolder = {folder_name: this.state.newFolderName};
         const jsonStringifiedFolderData = JSON.stringify(newFolder);
 
         let error;
 
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`${config.API_ENDPOINT}/api/folders`, {
             'method' : 'POST',
             'headers' : {
+                'Authorization': `Bearer ${config.API_TOKEN}`,
                 'Content-Type': 'application/json',
             },
             'body' : jsonStringifiedFolderData
@@ -46,14 +50,16 @@ class AddFolderFormView extends React.Component {
                 return response.json()
             })
             .then(response => {
+                console.log('Meow')
                 if (error) {
                     error.message = response.message;
                     return Promise.reject(error);
                 }
+                console.log(response)
                 const newFolder = {
                     id : response.id,
-                    name: response.name
-                }
+                    name: this.state.newfolderName,
+                };
                 this.context.addFolderToUI(newFolder)
                 this.props.history.push('/')
             })
@@ -69,7 +75,7 @@ class AddFolderFormView extends React.Component {
                     <button type='submit'>Add Folder</button>
 
                     {/* Should this be its own Component? */}
-                    {this.state.error ? <p>{this.state.error}</p> : ''}
+                    {this.state.error ? <p>{this.state.error.message}</p> : ''}
 
                 </form>
             </div>
