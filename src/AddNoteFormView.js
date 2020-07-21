@@ -94,13 +94,8 @@ class AddNoteFormView extends React.Component {
                     error.message = response.message;
                     return Promise.reject(error);
                 }
-                const newNote = {
-                    id : response[0].id,
-                    name: response[0].name,
-                    content: response[0].content,
-                    folderId: response[0].folderId,
-                    modified: response[0].modified
-                }                
+                const newNote = response[0] 
+                console.log(newNote)          
                 this.context.addNoteToUI(newNote)
                 this.props.history.push(`/note/${newNote.id}`)
             })
