@@ -11,7 +11,7 @@ class NoteViewMain extends React.Component {
         fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
             'method': 'DELETE',
             'headers': {
-                'Authorization': `Bearer ${config.API_TOKEN}`,
+                'Authorization': `Bearer ${config.API_KEY}`,
             }
         })
             .then(response => response.json())

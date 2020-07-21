@@ -37,7 +37,7 @@ class AddFolderFormView extends React.Component {
         fetch(`${config.API_ENDPOINT}/api/folders`, {
             'method' : 'POST',
             'headers' : {
-                'Authorization': `Bearer ${config.API_TOKEN}`,
+                'Authorization': `Bearer ${config.API_KEY}`,
                 'Content-Type': 'application/json',
             },
             'body' : jsonStringifiedFolderData

@@ -73,7 +73,7 @@ class AddNoteFormView extends React.Component {
         const settings = {
             'method' : 'POST',
             'headers' : {
-                'Authorization': `Bearer ${config.API_TOKEN}`,
+                'Authorization': `Bearer ${config.API_KEY}`,
                 'Content-Type': 'application/json',
             },
             'body' : jsonStringifiedNote

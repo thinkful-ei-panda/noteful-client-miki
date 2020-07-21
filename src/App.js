@@ -46,12 +46,12 @@ class App extends React.Component {
     Promise.all([
       fetch(`${config.API_ENDPOINT}/api/folders`, {
         "headers": {
-          "Authorization": `Bearer ${config.API_TOKEN}`
+          "Authorization": `Bearer ${config.API_KEY}`
         }
       }),
       fetch(`${config.API_ENDPOINT}/api/notes`, {
         "headers": {
-          "Authorization": `Bearer ${config.API_TOKEN}`
+          "Authorization": `Bearer ${config.API_KEY}`
         }
       })
     ])
@@ -80,6 +80,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(process.env)
+    console.log(config.API_KEY)
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,
