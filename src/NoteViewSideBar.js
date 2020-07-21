@@ -7,8 +7,8 @@ function NoteViewSideBar(props) {
     return (
         <NotefulContext.Consumer>
             {meow => {
-                const currentNote = meow.STORE.notes.find(note => note.id === Number(props.match.params.noteId))
-                const currentFolder = meow.STORE.folders.find(folder => folder.id === currentNote.folder_name)
+                const currentNote = meow.notes.find(note => note.id === Number(props.match.params.note_id))
+                const currentFolder = meow.folders.find(folder => folder.id === currentNote.folder_name)
                 if (currentFolder) {
                     return (
                         <section className="border group-column item">

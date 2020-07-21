@@ -7,8 +7,8 @@ class FolderViewSideBar extends React.Component {
     static contextType = NotefulContext;
 
     render () {
-        const folders = this.context.STORE.folders.map(folder => 
-            <li key={folder.id}><NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.folder_name}</NavLink></li>
+        const folders = this.context.folders.map(folder => 
+            <li key={folder.id}><NavLink to={`/folder/${folder.id}`} activeClassName='selected'>Folder: {folder.folder_name}</NavLink></li>
         )        
         return (
             <section className="border group-column item">

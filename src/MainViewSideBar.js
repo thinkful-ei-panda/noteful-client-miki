@@ -6,9 +6,9 @@ function MainViewSideBar() {
     return (
         <NotefulContext.Consumer>
             {value => {
-                const folders = value.STORE.folders.map(folder => 
+                const folders = value.folders.map(folder => 
                     <li key={folder.id}>
-                        <NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.folder_name}</NavLink>
+                        <NavLink to={`/folder/${folder.id}`} activeClassName='selected'>Folder: {folder.folder_name}</NavLink>
                     </li>
                 );
                 

@@ -18,28 +18,26 @@ import config from './config';
 // Code could be improved with better information architecture. 
 class App extends React.Component {
   state = {
-    STORE: {
-      folders: [],
-      notes: []
-    },    
+    folders: [],
+    notes: [],
     error: {}
   }
 
   addFolderToUI = (newFolder) => {
-    const newFolders = this.state.STORE.folders;
+    const newFolders = this.state.folders;
     newFolders.push(newFolder);
-    this.setState({STORE: {folders: newFolders, notes: [...this.state.STORE.notes]}});
+    this.setState({folders: newFolders, notes: [...this.state.notes]});
   };
 
   addNoteToUI = (newNote) => {
-    const newNotes = this.state.STORE.notes;
+    const newNotes = this.state.notes;
     newNotes.push(newNote);
-    this.setState({STORE: {folders: [...this.state.STORE.folders], notes: newNotes}});
+    this.setState({folders: [...this.state.folders], notes: newNotes});
   };
 
   deleteNoteFromUI = (noteId) => {
-    const newNotes = this.state.STORE.notes.filter(note => note.id !== noteId);
-    this.setState({STORE: {folders: [...this.state.STORE.folders], notes: newNotes}});
+    const newNotes = this.state.notes.filter(note => note.id !== noteId);
+    this.setState({folders: [...this.state.folders], notes: newNotes});
   };
 
   get = () => {
@@ -53,7 +51,7 @@ class App extends React.Component {
         "headers": {
           "Authorization": `Bearer ${config.API_KEY}`
         }
-      })
+      }),
     ])
       .then(([folders, notes]) => {
         if (!folders.ok) {
@@ -70,7 +68,7 @@ class App extends React.Component {
       })
       .then(([folders, notes]) => {
         console.log(folders, notes)
-        this.setState({STORE: {folders, notes}});
+        this.setState({folders, notes});
       })
       .catch(error => this.setState({error}, () => console.log(error)))
   };
@@ -80,10 +78,9 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(process.env)
-    console.log(config.API_KEY)
     const contextValue = {
-      STORE: this.state.STORE,
+      folders: this.state.folders,
+      notes: this.state.notes,
       addFolderToUI: this.addFolderToUI,
       addNoteToUI: this.addNoteToUI,
       deleteNoteFromUI: this.deleteNoteFromUI,
@@ -132,10 +129,10 @@ class App extends React.Component {
                 <Route exact path='/' component={MainViewSideBar} />
 
                 {/* Dynamic Folder Route */}
-                <Route exact path='/folder/:folderId' component={FolderViewSideBar} />
+                <Route exact path='/folder/:folder_id' component={FolderViewSideBar} />
 
                 {/* Dynamic Note Route */}
-                <Route exact path='/note/:noteId' component={NoteViewSideBar} />
+                <Route exact path='/note/:note_id' component={NoteViewSideBar} />
               </NotefulErrorBoundary>
 
 
@@ -146,10 +143,10 @@ class App extends React.Component {
                 <Route exact path='/' component={MainViewMain} />
                   
                 {/* Dynamic Folder Route */}
-                <Route exact path='/folder/:folderId' component={FolderViewMain} />
+                <Route exact path='/folder/:folder_id' component={FolderViewMain} />
 
                 {/* Dynamic Note Route */}
-                <Route exact path='/note/:noteId' component={NoteViewMain} />
+                <Route exact path='/note/:note_id' component={NoteViewMain} />
               {/* </NotefulErrorBoundary> */}
 
             </NotefulContext.Provider>

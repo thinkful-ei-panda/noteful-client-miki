@@ -8,7 +8,7 @@ class AddNoteFormView extends React.Component {
     state = {
         newNoteName: '',
         newNoteContent: '',
-        folderId: '1',
+        folder_id: '1',
         error: {
             message: null
         },
@@ -50,8 +50,8 @@ class AddNoteFormView extends React.Component {
     };
 
     inputNoteFolderId = (e) => {
-        const folderId = e.target.value;
-        this.setState({folderId});
+        const folder_id = e.target.value;
+        this.setState({folder_id});
     };
 
     // Network Request
@@ -59,13 +59,11 @@ class AddNoteFormView extends React.Component {
     addNoteRequest = (e) => {
         e.preventDefault();
 
-        const dateNoteModified = new Date().toDateString();
-
         const newNote = {
             note_name: this.state.newNoteName,
             note_content: this.state.newNoteContent,
-            folder_name: this.state.folderId,
-            modified: dateNoteModified
+            folder_name: this.state.folder_id,
+            modified: new Date().toLocaleString()
         };
 
         const jsonStringifiedNote = JSON.stringify(newNote);
@@ -103,7 +101,7 @@ class AddNoteFormView extends React.Component {
     };
 
     render() {
-        const folderOptions = this.context.STORE.folders.map(folder => 
+        const folderOptions = this.context.folders.map(folder => 
             // Can't seem to remember why the hell I did this
             // I suck
             folder.folder_name ? <option key={folder.id} value={folder.id}>{folder.folder_name}</option> : ''
