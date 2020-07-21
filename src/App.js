@@ -13,18 +13,16 @@ import NoteViewMain from './NoteViewMain';
 import NotefulContext from './NotefulContext';
 import NotefulErrorBoundary from './NotefulErrorBoundary';
 import './App.css';
+import config from './config';
 
 // Code could be improved with better information architecture. 
 class App extends React.Component {
   state = {
-
     STORE: {
       folders: [],
       notes: []
-    },
-    
+    },    
     error: {}
-
   }
 
   addFolderToUI = (newFolder) => {
@@ -45,28 +43,36 @@ class App extends React.Component {
   };
 
   get = () => {
-    let error;
-    fetch('http://localhost:9090/db')
-    .then(response => {
-      if (!response.ok) {
-       error.code = response.statusText;
-      }
-      return response.json()})
-    .then(response => {
-      if (error) {
-        error.message = response.message
-        return Promise.reject(error)
-      }
-      this.setState({STORE: response});
-    })
-    .catch(error => this.setState({error}))
-  }
+    Promise.all([
+      fetch('http://localhost:9090/folders'),
+      fetch('http://localhost:9090/notes')
+    ])
+      .then(([folders, notes]) => {
+        if (!folders.ok) {
+          return folders.json()
+            .then(e => Promise.reject(e));
+        };
+
+        if (!notes.ok) {
+          return notes.json()
+            .then(e => Promise.reject(e));
+        };
+
+        return Promise.all([folders.json(), notes.json()])
+      })
+      .then(([folders, notes]) => {
+        console.log(folders, notes)
+        this.setState({STORE: {folders, notes}});
+      })
+      .catch(error => this.setState({error}, () => console.log(error)))
+  };
 
   componentDidMount = () => {
     this.get();
   }
 
   render() {
+    console.log(config)
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,
