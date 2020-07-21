@@ -2,12 +2,18 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
+import config from './config';
 
 class NoteViewMain extends React.Component {
     static contextType = NotefulContext;
 
     deleteNoteRequest = (noteId) => {
-        fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
+        fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
+            'method': 'DELETE',
+            'headers': {
+                'Authorization': `Bearer ${config.API_TOKEN}`,
+            }
+        })
             .then(response => response.json())
             .then(response => this.context.deleteNoteFromUI(noteId))
             .then(this.props.history.push('/'))

@@ -2,10 +2,16 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
+import config from './config';
 
 function FolderViewMain(props) {
     const deleteNoteRequest = (noteId, deleteNoteFromUI) => {
-        fetch(`http://localhost:9090/notes/${noteId}`, {'method': 'DELETE'})
+        fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
+            'method': 'DELETE',
+            'headers': {
+                'Authorization': `Bearer ${config.API_TOKEN}`,
+            }
+        })
             .then(response => response.json())
             .then(response => deleteNoteFromUI(noteId))
             .then(props.history.push('/'))
