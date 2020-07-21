@@ -7,8 +7,6 @@ function NoteViewSideBar(props) {
     return (
         <NotefulContext.Consumer>
             {meow => {
-                console.log(meow.STORE.notes, 'Meow')
-                console.log(props.match.params)
                 const currentNote = meow.STORE.notes.find(note => note.id === Number(props.match.params.noteId))
                 const currentFolder = meow.STORE.folders.find(folder => folder.id === currentNote.folder_name)
                 if (currentFolder) {

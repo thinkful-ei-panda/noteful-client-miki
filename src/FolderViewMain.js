@@ -14,7 +14,6 @@ function FolderViewMain(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
-                console.log(value.STORE.notes, 'Meow')
                 const notes = value.STORE.notes.filter(note => note.folder_name === Number(props.match.params.folderId)).map(note => {
                     let dateNoteModifiedObj = new Date(note.modified);
                     let dateNoteModified = dateNoteModifiedObj.toDateString();

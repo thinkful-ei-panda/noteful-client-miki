@@ -34,7 +34,6 @@ class AddFolderFormView extends React.Component {
         const jsonStringifiedFolderData = JSON.stringify(newFolder);
 
         let error;
-
         fetch(`${config.API_ENDPOINT}/api/folders`, {
             'method' : 'POST',
             'headers' : {
@@ -46,22 +45,18 @@ class AddFolderFormView extends React.Component {
             .then(response => {
                 if (!response.ok) {
                     error.code = response.code;
-                }              
+                }
                 return response.json()
             })
             .then(response => {
-                console.log('Meow')
                 if (error) {
                     error.message = response.message;
                     return Promise.reject(error);
                 }
-                console.log(response)
-                const newFolder = {
-                    id : response.id,
-                    name: this.state.newfolderName,
-                };
+
+                const newFolder = response[0];
                 this.context.addFolderToUI(newFolder)
-                this.props.history.push('/')
+                this.props.history.push(`/folder/${newFolder.id}`)
             })
             .catch(error => this.setState({error}))
     };

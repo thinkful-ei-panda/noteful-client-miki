@@ -2,13 +2,16 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import propTypes from 'prop-types';
 import NotefulContext from './NotefulContext';
+import config from './config';
 
 class AddNoteFormView extends React.Component {
     state = {
         newNoteName: '',
         newNoteContent: '',
-        folderId: 'b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1',
-        error: null
+        folderId: '1',
+        error: {
+            message: null
+        },
     };
 
     static contextType = NotefulContext;
@@ -17,21 +20,21 @@ class AddNoteFormView extends React.Component {
 
     validateNoteName = (newNoteName) => {  
         if (!newNoteName) {
-            const error = 'Name must have at least 1 character'
+            let error = {message: 'Name must have at least 1 character'}
             this.setState({error})
         } else {
             this.setState({newNoteName, error: null});
         }
     };
 
-    validateNoteContent = (newNoteContent) => {  
-        if (!newNoteContent) {
-            const error = 'Name must have at least 1 character'
-            this.setState({error})
-        } else {
-            this.setState({newNoteContent, error: null});
-        }
-    };
+    // validateNoteContent = (newNoteContent) => {  
+    //     if (!newNoteContent) {
+    //         let error = {message: 'Content must have at least 1 character'}
+    //         this.setState({error})
+    //     } else {
+    //         this.setState({newNoteContent, error: null});
+    //     }
+    // };
 
     // Event Handlers
 
@@ -42,7 +45,8 @@ class AddNoteFormView extends React.Component {
 
     inputNoteContent = (e) => {
         const newNoteContent = e.target.value;
-        this.validateNoteContent(newNoteContent);
+        // this.validateNoteContent(newNoteContent);
+        this.setState({newNoteContent});
     };
 
     inputNoteFolderId = (e) => {
@@ -55,13 +59,12 @@ class AddNoteFormView extends React.Component {
     addNoteRequest = (e) => {
         e.preventDefault();
 
-        const dateNoteModifiedObj = new Date();
-        const dateNoteModified = dateNoteModifiedObj.toDateString();
+        const dateNoteModified = new Date().toDateString();
 
         const newNote = {
-            name: this.state.newNoteName,
-            content: this.state.newNoteContent,
-            folderId: this.state.folderId,
+            note_name: this.state.newNoteName,
+            note_content: this.state.newNoteContent,
+            folder_name: this.state.folderId,
             modified: dateNoteModified
         };
 
@@ -70,13 +73,14 @@ class AddNoteFormView extends React.Component {
         const settings = {
             'method' : 'POST',
             'headers' : {
+                'Authorization': `Bearer ${config.API_TOKEN}`,
                 'Content-Type': 'application/json',
             },
             'body' : jsonStringifiedNote
         };
 
         let error;
-        fetch(`http://localhost:9090/notes`, settings)
+        fetch(`${config.API_ENDPOINT}/api/notes`, settings)
             .then(response => {
                 if (!response.ok) {
                     error.code = response.code;
@@ -84,26 +88,30 @@ class AddNoteFormView extends React.Component {
                 return response.json()
             })
             .then(response => {
+                console.log(response[0]);
+
                 if (error) {
                     error.message = response.message;
                     return Promise.reject(error);
                 }
                 const newNote = {
-                    id : response.id,
-                    name: response.name,
-                    content: response.content,
-                    folderId: response.folderId,
-                    modified: response.modified
+                    id : response[0].id,
+                    name: response[0].name,
+                    content: response[0].content,
+                    folderId: response[0].folderId,
+                    modified: response[0].modified
                 }                
                 this.context.addNoteToUI(newNote)
-                this.props.history.push(`/folder/${response.folderId}`)
+                this.props.history.push(`/note/${newNote.id}`)
             })
             .catch(error => this.setState({error}))
     };
 
     render() {
         const folderOptions = this.context.STORE.folders.map(folder => 
-            folder.name ? <option key={folder.id} value={folder.id}>{folder.name}</option> : ''
+            // Can't seem to remember why the hell I did this
+            // I suck
+            folder.folder_name ? <option key={folder.id} value={folder.id}>{folder.folder_name}</option> : ''
         );
         return (
             <div className="border group-column item-double justify-content-center">
@@ -123,7 +131,7 @@ class AddNoteFormView extends React.Component {
 
                     <button type='submit'>Add Note</button>
                     
-                    {this.state.error ? <p>{this.state.error}</p> : ''}
+                    {this.state.error ? <p>{this.state.error.message}</p> : ''}
                 </form>
 
             </div>
