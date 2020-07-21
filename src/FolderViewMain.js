@@ -14,12 +14,13 @@ function FolderViewMain(props) {
     return (
         <NotefulContext.Consumer>
             {value => {
-                const notes = value.STORE.notes.filter(note => note.folderId === props.match.params.folderId).map(note => {
+                console.log(value.STORE.notes, 'Meow')
+                const notes = value.STORE.notes.filter(note => note.folder_name === Number(props.match.params.folderId)).map(note => {
                     let dateNoteModifiedObj = new Date(note.modified);
                     let dateNoteModified = dateNoteModifiedObj.toDateString();
                     return (
                         <section className="border group-column note-margin note-padding width" key={note.id}>
-                            <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
+                            <h2><Link to={`/note/${note.id}`}>Name: {note.note_name}</Link></h2>
                             <div className="group-row note-group-row">
                                 <p>Date modified on: {dateNoteModified}</p>
                                 <button onClick={() => deleteNoteRequest(note.id, value.deleteNoteFromUi)}>Delete Note</button>

@@ -19,7 +19,7 @@ function MainViewMain(props) {
                     let dateNoteModified = dateNoteModifiedObj.toDateString();
                     return (
                         <section className="border group-column note-margin note-padding width" key={note.id}>
-                            <h2><Link to={`/note/${note.id}`}>Name: {note.name}</Link></h2>
+                            <h2><Link to={`/note/${note.id}`}>Name: {note.note_name}</Link></h2>
                             <div className="group-row note-group-row">
                                 <p>Date modified on: {dateNoteModified}</p>
                                 <button onClick={() => deleteNoteRequest(note.id, value.deleteNoteFromUI)}>Delete Note</button>

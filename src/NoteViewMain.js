@@ -14,7 +14,7 @@ class NoteViewMain extends React.Component {
     };
     
     render = () => {
-        const currentNote = this.context.STORE.notes.find(note => note.id === this.props.match.params.noteId);
+        const currentNote = this.context.STORE.notes.find(note => note.id === Number(this.props.match.params.noteId));
         if (currentNote) {
             const dateNoteModifiedObj = new Date(currentNote.modified);
             const dateNoteModified = dateNoteModifiedObj.toDateString();
@@ -22,13 +22,13 @@ class NoteViewMain extends React.Component {
                 <section className="border group-column item-double">
                     <section>
                         <div className="border group-column note-margin width">
-                            <h2>{currentNote.name}</h2>
+                            <h2>{currentNote.note_name}</h2>
                             <div className="group-row note-group-row">
                                 <p>Date modified on: {dateNoteModified}</p>
                                 <button onClick={() => this.deleteNoteRequest(currentNote.id, this.context.deleteNoteFromUI)}>Delete Note</button>
                             </div>
                         </div>
-                        <p className="note-margin width">{currentNote.content}</p>
+                        <p className="note-margin width">{currentNote.note_content}</p>
                     </section>
                 </section>
             );

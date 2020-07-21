@@ -44,8 +44,16 @@ class App extends React.Component {
 
   get = () => {
     Promise.all([
-      fetch('http://localhost:9090/folders'),
-      fetch('http://localhost:9090/notes')
+      fetch(`${config.API_ENDPOINT}/api/folders`, {
+        "headers": {
+          "Authorization": `Bearer ${config.API_TOKEN}`
+        }
+      }),
+      fetch(`${config.API_ENDPOINT}/api/notes`, {
+        "headers": {
+          "Authorization": `Bearer ${config.API_TOKEN}`
+        }
+      })
     ])
       .then(([folders, notes]) => {
         if (!folders.ok) {
@@ -72,7 +80,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(config)
     const contextValue = {
       STORE: this.state.STORE,
       addFolderToUI: this.addFolderToUI,

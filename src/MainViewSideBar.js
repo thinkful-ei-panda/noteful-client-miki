@@ -8,7 +8,7 @@ function MainViewSideBar() {
             {value => {
                 const folders = value.STORE.folders.map(folder => 
                     <li key={folder.id}>
-                        <NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.name}</NavLink>
+                        <NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.folder_name}</NavLink>
                     </li>
                 );
                 

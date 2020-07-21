@@ -8,7 +8,7 @@ class FolderViewSideBar extends React.Component {
 
     render () {
         const folders = this.context.STORE.folders.map(folder => 
-            <li key={folder.id}><NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.name}</NavLink></li>
+            <li key={folder.id}><NavLink to={`/folder/${folder.id}`} activeClassName='selected'>{folder.folder_name}</NavLink></li>
         )        
         return (
             <section className="border group-column item">
