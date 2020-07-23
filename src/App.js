@@ -43,13 +43,13 @@ class App extends React.Component {
   get = () => {
     Promise.all([
       fetch(`${config.API_ENDPOINT}/api/folders`, {
-        "headers": {
-          "Authorization": `Bearer ${config.API_KEY}`
+        headers : {
+          'Authorization': `Bearer ${config.API_KEY}`
         }
       }),
       fetch(`${config.API_ENDPOINT}/api/notes`, {
-        "headers": {
-          "Authorization": `Bearer ${config.API_KEY}`
+        headers : {
+          'Authorization': `Bearer ${config.API_KEY}`
         }
       }),
     ])

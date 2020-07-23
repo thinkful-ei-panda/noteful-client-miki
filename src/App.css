@@ -1,4 +1,6 @@
-@import url(//db.onlinewebfonts.com/c/63467b9cbd4a4d7eafb5e64946ecaa18?family=Maison+Neue);
+/* @import url(//db.onlinewebfonts.com/c/63467b9cbd4a4d7eafb5e64946ecaa18?family=Maison+Neue); */
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
 
 *{
     font-family: "Maison Neue", sans-serif;
